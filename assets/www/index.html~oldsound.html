@@ -1,0 +1,281 @@
+<!doctype html>
+<html>
+<head>
+  <title>Playlist</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="viewport" content="width=device-width, user-scalable=no" />
+  
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
+  <script type="text/javascript" src="js/jquery.color.js"></script>
+
+  <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
+  <script type="text/javascript" src="js/jplayer.playlist.min.js"></script>
+
+  
+  <script type="text/javascript">
+  //<![CDATA[
+  var myPlaylist;
+  var quotes = new Array();
+  var designColor = '';
+  quotes[0] = '<p>"We just wanted to do an hour of hardcore punk that we liked, have it out there and see what happened. Soulwax is a work of craziness. I think we may have under-estimated it a little bit."</p> <p>&ndash;Radio Soulwax</p>';
+  quotes[1] = '<p>"I wasn\'t able to cross over into mainstream pop, and I\'m not indie either. I\'m in this weird cloud. I have to prove myself again and again."</p> <p>&ndash;Sky Ferreira</p>';
+  quotes[2] = "<p>Eorporis suscipit laboriosam, nisi ut aliquid ex. —Nicolas Godin</p>";
+  
+
+  $(document).ready(function(){
+
+  	myPlaylist = new jPlayerPlaylist({
+  		jPlayer: "#jquery_jplayer_1",
+  		cssSelectorAncestor: "#jp_container_1"
+  	}, [
+  		{
+  			title:"Night and Day",
+  			mp3:"http://10.255.1.230:8888/09%20vu%20u.mp3",
+  			poster:"http://10.255.1.230:8888/air.jpg"
+  		},
+  		{
+  			title:"Sky Ferreira",
+  			mp3:"http://10.255.1.230:8888/01%20global%20girlfriend.mp3",
+  			poster:"http://10.255.1.230:8888/sky.jpg"
+  		},  		
+  		{
+  			title:"Brotherhood",
+  			mp3:"http://10.255.1.230:8888/03%20brotherhood.mp3",
+  			poster:"http://10.255.1.230:8888/2manydjs.jpg"  			
+  		}
+  	], {
+  	  playlistOptions: {
+  	    //autoPlay: true
+	    },
+  		swfPath: "../js",
+  		supplied: "mp3",
+  		loop: "true",
+  		wmode: "window"
+  	});
+
+
+
+    $("#jquery_jplayer_1").bind($.jPlayer.event.play, function(event) { // Add a listener to report the time play began
+      //console.log(event);
+      //console.log(event.jPlayer.status.media.mp3);
+    });    
+    $("#jquery_jplayer_1").bind($.jPlayer.event.ready, function(event) { // Add a listener to report the time play began
+		  //$(".jp-shuffle").click();
+		  //myPlaylist.shuffle(true, true);
+		  
+		  $("#jquery_jplayer_1").jPlayer("play");
+		  //console.log(myPlaylist);
+	  });   
+	  
+    $("#jquery_jplayer_1").bind($.jPlayer.event.loadstart, function(event) { // Add a listener to report the time play began
+      //console.log(myPlaylist.current);
+      //console.log(quotes[myPlaylist.current]);
+      $("#artist-quote").html(quotes[myPlaylist.current]);
+      $("#artist-quote").css("opacity", .9);
+      setTimeout(function(){ $("#artist-quote").css("opacity", .3) }, 10000);
+      
+      
+    });
+            
+    setInterval("checkColor();",100);
+    
+    setTimeout(function(){ $("#artist-quote").css("opacity", .3) }, 10000);
+    $('*').click(function(){
+    	$("#artist-quote").css("opacity", .9);
+      setTimeout(function(){ $("#artist-quote").css("opacity", .3) }, 10000);
+    	
+    });
+    
+	   
+  });
+  
+  
+  function checkColor() {
+
+    /*
+    $.getJSON("http://10.255.1.230:8888/color.php", function (color) {
+      //console.log(color);      
+      return color;
+    }); */
+    
+    $.ajax({
+
+        url: 'http://10.255.1.230:8888/color.txt',
+        type: 'GET',
+        //crossDomain: true,
+        dataType: 'json',
+        success: function(e) { 
+          //return "Success" + e; 
+          $('.overlay').html(data);
+          alert('Load was performed.');
+
+        },
+        error: function(e) { 
+          
+          if (designColor != e.responseText) {
+            designColor = e.responseText;
+            $('#overlay').css({backgroundColor: 'rgb(' + designColor + ')'});
+          }
+          
+          /*
+          if (designColor == 'red') {
+            $('#overlay').removeClass().addClass('red');            
+          }
+          if (designColor == 'blue') {
+            $('#overlay').removeClass().addClass('blue');            
+          }
+          if (designColor == 'yellow') {
+            $('#overlay').removeClass().addClass('yellow');            
+          }               */
+          return e.responseText; 
+        }
+    });
+  }  
+  //]]>
+  </script>
+
+
+
+
+  <style>
+    #jquery_jplayer_1 {
+      height:auto!important;
+      width: auto!important;
+      overflow: hidden;
+      position:relative;
+    }
+    #jquery_jplayer_1 img {
+      display: block!important;
+      width:360px!important;
+      height:auto!important;
+    }
+    
+    #overlay{
+      width: 100%;
+      height: 640px;
+      background-color: black;
+      position:absolute;
+      top:0;
+      left:0;
+      opacity:.2;
+      pointer-events:none;
+	  -webkit-transition: background-color 1400ms linear;
+      
+    }
+    #overlay.red {
+   	  background-color: red;
+    }
+    #overlay.blue {
+   	  background-color: blue;
+    }
+    #overlay.yellow {
+   	  background-color: yellow;
+    }
+    
+    #artist-quote {
+      width: 310px;
+      position: absolute;
+      top: 10px;
+      padding: 0 25px;
+      color: white;
+      font-size: 30px;
+      line-height: 1.4em;
+      font-family: "times new roman";
+      font-style: italic;
+      opacity:.9;
+      -webkit-transition:opacity 1s linear;
+      text-align: justify;
+      text-shadow: 1px 1px 0px #707070;
+    }
+    
+    
+    
+    body { margin: 0; }
+    
+    #jp_container_1 {
+      display:none;
+    }
+    
+    /*
+    .jp-progress {
+    background: url("jplayer.pink.flag.jpg") 0px -240px no-repeat;
+    width: 197px;
+    height: 13px;
+    padding: 0 2px 2px 2px;
+    margin-bottom: 4px;
+    overflow: hidden;
+    }
+    div.jp-video .jp-progress {
+    border-top: 1px solid #180A1F;
+    border-bottom: 1px solid #554560;
+    width: 100%;
+    background-image: none;
+    padding: 0;
+    }
+    .jp-seek-bar {
+    background: url("jplayer.pink.flag.jpg") 0px -260px repeat-x;
+    width: 0px;
+    height: 100%;
+    overflow: hidden;
+    cursor: pointer;
+    }
+    .jp-play-bar {
+    background: url("jplayer.pink.flag.jpg") 0px -280px repeat-x;
+    width: 0px;
+    height: 100%;
+    overflow: hidden;
+    }    
+    */        
+  </style>
+</head>
+<body>
+  <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+  <div id="artist-quote"></div>
+  <div id="overlay"></div>
+	<div id="jp_container_1" class="jp-audio">
+		<div class="jp-type-playlist">
+			<div class="jp-gui jp-interface">
+				<ul class="jp-controls">
+					<li><a href="javascript:;" class="jp-previous" tabindex="1">previous</a></li>
+					<li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
+					<li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
+					<li><a href="javascript:;" class="jp-next" tabindex="1">next</a></li>
+					<li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>
+					<li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>
+					<li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>
+					<li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>
+				</ul>
+				<div class="jp-progress">
+					<div class="jp-seek-bar">
+						<div class="jp-play-bar"></div>
+
+					</div>
+				</div>
+				<div class="jp-volume-bar">
+					<div class="jp-volume-bar-value"></div>
+				</div>
+				<div class="jp-current-time"></div>
+				<div class="jp-duration"></div>
+				<ul class="jp-toggles">
+					<li><a href="javascript:;" class="jp-shuffle" tabindex="1" title="shuffle">shuffle</a></li>
+					<li><a href="javascript:;" class="jp-shuffle-off" tabindex="1" title="shuffle off">shuffle off</a></li>
+					<li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li>
+					<li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>
+				</ul>
+			</div>
+			<div class="jp-playlist">
+				<ul>
+					<li></li>
+				</ul>
+			</div>
+			<div class="jp-no-solution">
+				<span>Update Required</span>
+				To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+			</div>
+		</div>
+	</div>
+
+		<div id="jplayer_inspector_1"></div>
+</body>
+
+</html>
