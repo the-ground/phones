@@ -1,218 +1,138 @@
-<!doctype html>
-<html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <head>
-  <title>Playlist</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="viewport" content="width=device-width, user-scalable=no" />
+
+<style>
+@-webkit-keyframes GoLayer1{
+  0% {opacity:0;}
+  25% {opacity:1;}
+  50% {opacity:0;}
+  75% {opacity:0;}
+  100% {opacity:0;}  
+
+}
+@-webkit-keyframes GoLayer2{
+  0% {opacity:0;}
+  25% {opacity:0;}
+  50% {opacity:1;}
+  75% {opacity:0;}
+  100% {opacity:0;}  
+}
+@-webkit-keyframes GoLayer3{
+  0% {opacity:0;}
+  25% {opacity:0;}
+  50% {opacity:0;}
+  75% {opacity:1;}
+  100% {opacity:0;}  
+}
+@-webkit-keyframes GoLayer4{
+  0% {opacity:0;}
+  25% {opacity:0;}
+  50% {opacity:0;}
+  75% {opacity:0;}
+  100% {opacity:1;}  
+}
+
+@-webkit-keyframes mood1{
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+@-webkit-keyframes mood2{
+  0% {opacity:1;}
+  100% {opacity:0;}
+}
+
+
+.layer1{
+/*    background: -webkit-linear-gradient(bottom, rgb(43,70,94) 29%, rgb(194,41,41) 65%, rgb(155,171,38) 83%); */
+  background: -webkit-linear-gradient(45deg, rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); 
+    -webkit-animation: GoLayer1 15s infinite;
+}
+
+.layer2{
+    background: -webkit-linear-gradient(bottom, rgb(225,202,230) 29%, rgb(39,163,194) 65%, rgb(36,124,171) 83%);
+    -webkit-animation: GoLayer2 20s infinite;
+
+}
+.layer3{
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(196,222,242)), color-stop(0.5, rgb(242,242,242)), color-stop(1, rgb(240,240,240)));
+    -webkit-animation: GoLayer3 32s infinite;
+}
+.layer4 {
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* Chrome10+,Safari5.1+ */ 
+  -webkit-animation: GoLayer4 35s infinite;
   
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
-  <script type="text/javascript" src="js/jquery.color.js"></script>
+}
 
-  <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
-  <script type="text/javascript" src="js/jplayer.playlist.min.js"></script>
+.layer5{
+/*    background: -webkit-linear-gradient(bottom, rgb(43,70,94) 29%, rgb(194,41,41) 65%, rgb(155,171,38) 83%); */
+    background: -webkit-linear-gradient(45deg, rgba(252,236,252,1) 0%,rgba(191,132,128,1) 35%,rgba(249,137,137,1) 70%,rgba(252,156,141,1) 99%,rgba(255,124,216,1) 100%);
+    -webkit-animation: GoLayer2 15s infinite;
+}
 
+.layer6{
+    background: -webkit-radial-gradient(top left, ellipse cover, rgba(252,236,252,1) 0%,rgba(191,132,128,.5) 8%,rgba(249,137,137,1) 55%,rgba(252,156,141,.5) 100%,rgba(255,124,216,1) 100%);
+    -webkit-animation: GoLayer2 20s infinite;
+
+}
+.layer7{
+  background: -webkit-radial-gradient(80% 60%, ellipse cover, rgba(200,149,149,.2) 0%,rgba(113,13,13,.3) 46%,rgba(100,20,1,.5) 50%,rgba(30,10,10,.4) 53%,rgba(178,78,78,.2) 76%,rgba(56,56,56,1) 87%,rgba(27,27,27,1) 100%); /* Chrome10+,Safari5.1+ */
+
+    -webkit-animation: GoLayer3 30s infinite;
+}
+.layer8 {
+  background: -webkit-radial-gradient(50% 65%, ellipse cover, rgba(255,10,0,.5)  0%,rgba(125,185,232,0) 100%); /* Chrome10+,Safari5.1+ */
+  -webkit-animation: GoLayer4 30s infinite;
   
-  <script type="text/javascript">
-  //<![CDATA[
-  var myPlaylist;
-  var quotes = new Array();
-  quotes[0] = "Quote from the song Night and Day, dolor sit amet, consectetur adipisicing elit.";
-  quotes[1] = "Global girl, sed ut sit voluptatem accusantium doloremque laudantium.";
-  quotes[2] = "Eorporis suscipit laboriosam, nisi ut aliquid ex. ÑNicolas Godin";
-  
+}
+
+/*
+.blue-mood {
+  -webkit-animation: mood1 30s infinite;
+}
+.red-mood {
+  -webkit-animation: mood2 30s infinite;
+}
+*/
 
 
-  $(document).ready(function(){
+.layer,.bleedShield{
+    position:absolute;
+    width:100%;
+    height:100%;
+}
+.bleedShield{
+    position:static;
+    background:white;
+    width:100%;
+    height:100%;
+}
 
-  	myPlaylist = new jPlayerPlaylist({
-  		jPlayer: "#jquery_jplayer_1",
-  		cssSelectorAncestor: "#jp_container_1"
-  	}, [
-  		{
-  			title:"Night and Day",
-  			mp3:"http://192.168.2.22:8888/02%20night%20and%20day.mp3",
-  			poster:"http://static.nme.com/images/gallery/AirPR140111.jpg"
-  		},
-  		{
-  			title:"Global Girlfriend",
-  			mp3:"http://192.168.2.22:8888/01%20global%20girlfriend.mp3",
-  			poster:"http://192.168.2.22:8888/00%20Solar%20Year%20-%20Waverly.jpg"
-  		},  		
-  		{
-  			title:"Brotherhood",
-  			mp3:"http://192.168.2.22:8888/03%20brotherhood.mp3"
-  		}
-  	], {
-  	  playlistOptions: {
-  	    //autoPlay: true
-	    },
-  		swfPath: "../js",
-  		supplied: "mp3",
-  		loop: "true",
-  		wmode: "window"
-  	});
+body {
+  margin:0;
+  padding:0;
+}
+â€‹</style>
 
-
-
-    $("#jquery_jplayer_1").bind($.jPlayer.event.play, function(event) { // Add a listener to report the time play began
-      //console.log(event);
-      //console.log(event.jPlayer.status.media.mp3);
-    });    
-    $("#jquery_jplayer_1").bind($.jPlayer.event.ready, function(event) { // Add a listener to report the time play began
-		  //$(".jp-shuffle").click();
-		  //myPlaylist.shuffle(true, true);
-		  
-		  $("#jquery_jplayer_1").jPlayer("play");
-		  //console.log(myPlaylist);
-	  });   
-	  
-    $("#jquery_jplayer_1").bind($.jPlayer.event.loadstart, function(event) { // Add a listener to report the time play began
-      //console.log(myPlaylist.current);
-      //console.log(quotes[myPlaylist.current]);
-      $("#artist-quote").text(quotes[myPlaylist.current]);
-      
-    });
-    
-    $(".omg").click(function(){
-      $('#overlay').animate({backgroundColor: '#ff000' }, 1000);
-      //$('#overlay').css("background-color","#ff000");
-    });
-    
-    //alert(checkColor());
-	   
-  });
-  
-  function checkColor() {
-
-    
-    $.getJSON("http://192.168.2.22:8888/color.php", function (color) {
-      //console.log(color);      
-      return color;
-    });
-  }  
-  //]]>
-  </script>
-
-  <style>
-    #jquery_jplayer_1 {
-      height:auto!important;
-      width: auto!important;
-      overflow: hidden;
-      position:relative;
-    }
-    #jquery_jplayer_1 img {
-      display: block!important;
-      width:360px!important;
-      height:auto!important;
-    }
-    
-    #overlay{
-      width: 100%;
-      height: 100px;
-      background-color: blue;
-      position:static;
-      top:0;
-      left:0;
-      opacity:.6;
-      pointer-events:none;
-    }
-    
-    #artist-quote {
-      width: 330px;
-      position: absolute;
-      top: 10px;
-      padding: 0 15px;
-      color: white;
-      font-size: 30px;
-      font-family: "times new roman";
-      font-style: italic;
-      opacity:.9;
-    }
-    
-    
-    body { margin: 0; }
-    
-    /*
-    .jp-progress {
-    background: url("jplayer.pink.flag.jpg") 0px -240px no-repeat;
-    width: 197px;
-    height: 13px;
-    padding: 0 2px 2px 2px;
-    margin-bottom: 4px;
-    overflow: hidden;
-    }
-    div.jp-video .jp-progress {
-    border-top: 1px solid #180A1F;
-    border-bottom: 1px solid #554560;
-    width: 100%;
-    background-image: none;
-    padding: 0;
-    }
-    .jp-seek-bar {
-    background: url("jplayer.pink.flag.jpg") 0px -260px repeat-x;
-    width: 0px;
-    height: 100%;
-    overflow: hidden;
-    cursor: pointer;
-    }
-    .jp-play-bar {
-    background: url("jplayer.pink.flag.jpg") 0px -280px repeat-x;
-    width: 0px;
-    height: 100%;
-    overflow: hidden;
-    }    
-    */        
-  </style>
 </head>
 <body>
-  <div id="jquery_jplayer_1" class="jp-jplayer"></div>
-  <div id="artist-quote"></div>
-  <a class="omg">COLOR CHANGE</a>
-  <div id="overlay"></div>
-	<div id="jp_container_1" class="jp-audio">
-		<div class="jp-type-playlist">
-			<div class="jp-gui jp-interface">
-				<ul class="jp-controls">
-					<li><a href="javascript:;" class="jp-previous" tabindex="1">previous</a></li>
-					<li><a href="javascript:;" class="jp-play" tabindex="1">play</a></li>
-					<li><a href="javascript:;" class="jp-pause" tabindex="1">pause</a></li>
-					<li><a href="javascript:;" class="jp-next" tabindex="1">next</a></li>
-					<li><a href="javascript:;" class="jp-stop" tabindex="1">stop</a></li>
-					<li><a href="javascript:;" class="jp-mute" tabindex="1" title="mute">mute</a></li>
-					<li><a href="javascript:;" class="jp-unmute" tabindex="1" title="unmute">unmute</a></li>
-					<li><a href="javascript:;" class="jp-volume-max" tabindex="1" title="max volume">max volume</a></li>
-				</ul>
-				<div class="jp-progress">
-					<div class="jp-seek-bar">
-						<div class="jp-play-bar"></div>
-
-					</div>
-				</div>
-				<div class="jp-volume-bar">
-					<div class="jp-volume-bar-value"></div>
-				</div>
-				<div class="jp-current-time"></div>
-				<div class="jp-duration"></div>
-				<ul class="jp-toggles">
-					<li><a href="javascript:;" class="jp-shuffle" tabindex="1" title="shuffle">shuffle</a></li>
-					<li><a href="javascript:;" class="jp-shuffle-off" tabindex="1" title="shuffle off">shuffle off</a></li>
-					<li><a href="javascript:;" class="jp-repeat" tabindex="1" title="repeat">repeat</a></li>
-					<li><a href="javascript:;" class="jp-repeat-off" tabindex="1" title="repeat off">repeat off</a></li>
-				</ul>
-			</div>
-			<div class="jp-playlist">
-				<ul>
-					<li></li>
-				</ul>
-			</div>
-			<div class="jp-no-solution">
-				<span>Update Required</span>
-				To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
-			</div>
-		</div>
-	</div>
-
-		<div id="jplayer_inspector_1"></div>
+  <div class="container">
+      <div class="bleedShield">
+          <div class="blue-mood">
+            <div class="layer layer1"></div>
+            <div class="layer layer2"></div>
+            <div class="layer layer3"></div>
+            <div class="layer layer4"></div>
+          </div>
+          <!--
+          <div class="red-mood">
+            <div class="layer layer5"></div>
+            <div class="layer layer6"></div>
+            <div class="layer layer7"></div>
+            <div class="layer layer8"></div>
+          </div> 
+          -->       
+  </div>
 </body>
-
 </html>
