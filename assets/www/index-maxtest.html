@@ -12,7 +12,6 @@
 var designColor = '';
 var newDesignColor = '';
 
-console.log(designColor + 'yo');
 
 $(document).ready(function(){
   setInterval("checkColor()",500);
@@ -20,12 +19,6 @@ $(document).ready(function(){
 
 function checkColor() {
 
-  /*
-  $.getJSON("http://10.255.1.230:8888/color.php", function (color) {
-    //console.log(color);      
-    return color;
-  }); */
-  console.log(designColor + "hmm");
   $.ajax({
 
       url: 'http://192.168.20.211:8888/color.php',
@@ -44,9 +37,13 @@ function checkColor() {
 
         if (designColor+'string' != newDesignColor+'string') {
          	 designColor = e.responseText.split(" ");
-         	 $('.red-mood').css({opacity: designColor[0] });
-          	 $('.green-mood').css({opacity: designColor[1] });
-         	 $('.blue-mood').css({opacity: designColor[2] });                    
+         	 //$('.red-mood').css({opacity: designColor[0] });
+           //$('.green-mood').css({opacity: designColor[1] });
+         	 //$('.blue-mood').css({opacity: designColor[2] });  
+         	 
+         	 rgbvalue = Math.floor(designColor[0]*255) + ',' + Math.floor(designColor[1]*255) + ',' + Math.floor(designColor[2]*255);
+         	 console.log(rgbvalue + 'rgbbb');
+         	 $('.tintlayer').css({backgroundColor: 'rgb(' + rgbvalue + ')'});
 
         }
         
@@ -87,6 +84,16 @@ function checkColor() {
   75% {opacity:0;}
   100% {opacity:1;}  
 }
+@-webkit-keyframes GoLayer5{
+  0% {opacity:0;}
+  70% {opacity:1;}
+  100% {opacity:0;}  
+}
+@-webkit-keyframes GoLayer6{
+  0% {opacity:0;}
+  30% {opacity:1;}
+  100% {opacity:0;}  
+}
 
 @-webkit-keyframes mood1{
   0% {opacity:0;}
@@ -121,22 +128,29 @@ function checkColor() {
 
 .layer5{
 /*    background: -webkit-linear-gradient(bottom, rgb(43,70,94) 29%, rgb(194,41,41) 65%, rgb(155,171,38) 83%); */
-    background: -webkit-linear-gradient(45deg, rgba(252,236,252,1) 0%,rgba(191,132,128,1) 35%,rgba(249,137,137,1) 70%,rgba(252,156,141,1) 99%,rgba(255,124,216,1) 100%);
-    -webkit-animation: GoLayer2 15s infinite;
+background: -webkit-radial-gradient(80% 20%, ellipse cover, rgba(50,40,30,.4) 0%,rgba(125,126,125,1) 83%);
+    -webkit-animation: GoLayer5 28s infinite;
 }
 
+.layer5b{
+/*    background: -webkit-linear-gradient(bottom, rgb(43,70,94) 29%, rgb(194,41,41) 65%, rgb(155,171,38) 83%); */
+background: -webkit-radial-gradient(20% 90%, ellipse cover, rgba(50,40,30,.4) 0%,rgba(125,126,125,1) 83%);
+    -webkit-animation: GoLayer5 37s infinite;
+}
+
+
 .layer6{
-    background: -webkit-radial-gradient(top left, ellipse cover, rgba(252,236,252,1) 0%,rgba(191,132,128,.5) 8%,rgba(249,137,137,1) 55%,rgba(252,156,141,.5) 100%,rgba(255,124,216,1) 100%);
+background: -webkit-linear-gradient(45deg, rgba(245,243,245,1) 0%,rgba(163,157,157,0.58) 13%,rgba(173,165,165,0) 31%,rgba(199,187,187,0.81) 79%,rgba(198,186,189,0.91) 85%,rgba(197,183,193,0.91) 100%);
     -webkit-animation: GoLayer2 20s infinite;
 
 }
 .layer7{
-    background: -webkit-linear-gradient(45deg, rgba(248,80,50,1) 0%,rgba(241,111,92,1) 70%,rgba(240,47,23,1) 92%,rgba(231,56,39,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -webkit-linear-gradient(45deg, rgba(171,134,127,.7) 0%,rgba(183,155,151,0) 70%,rgba(156,114,108,0.73) 92%,rgba(156,117,114,1) 100%);
     -webkit-animation: GoLayer3 30s infinite;
 }
 .layer8 {
-  background: -webkit-radial-gradient(50% 65%, ellipse cover, rgba(255,10,0,.5)  0%,rgba(125,185,232,0) 100%); /* Chrome10+,Safari5.1+ */
-  -webkit-animation: GoLayer4 30s infinite;
+background: -webkit-linear-gradient(45deg, rgba(167,91,89,0.5) 0%,rgba(163,181,195,0) 100%);
+  -webkit-animation: GoLayer4 33s infinite;
   
 }
 
@@ -168,7 +182,7 @@ function checkColor() {
 }
 
 
-.layer,.bleedShield{
+.layer,.bleedShield,.tintlayer{
     position:absolute;
     width:100%;
     height:100%;
@@ -191,21 +205,29 @@ function checkColor() {
   body { margin:0; padding:0; }
   .red-mood .screen { background:red; opacity: .3; }
   .green-mood .screen { background:green; opacity: .3; }
-  .blue-mood .screen { background:blue; opacity: .3; }    
+  .blue-mood .screen { background:blue; opacity: .3; } 
+  
+  .tintlayer {
+    -webkit-transition: background-color 400ms linear;
+  }
   
 </style>
 </head>
 <body>
   <div class="container">
       <div class="bleedShield">
+        <div class="tint">
+          <div class="tintlayer"></div>
+        </div>
+        
         <div class="red-mood">
           <div class="layer layer5"></div>
           <div class="layer layer6"></div>
           <div class="layer layer7"></div>
           <div class="layer layer8"></div>
-          <div class="layer screen"></div>
+          <!--<div class="layer screen"></div>-->
         </div>
-
+<!--
         <div class="green-mood">
           <div class="layer layer9"></div>
           <div class="layer layer10"></div>
@@ -222,7 +244,7 @@ function checkColor() {
           <div class="layer layer4"></div>
           <div class="layer screen"></div>          
         </div>
-
+-->
         
       </div>
   </div>
