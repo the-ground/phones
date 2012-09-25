@@ -38,41 +38,18 @@ function checkColor() {
         console.log('Load was performed.');
 
       },
-      //color.php causes "error" because it's not valid Json, doesn't matter
-      error: function(e) { 
-        newDesignColor = e.responseText;
+      
+      error: function(e) {									//color.php causes "error" because it's not valid Json, doesn't matter 
         newDesignColor = e.responseText.split(" ");
-//        newDesignColor = newDesignColor.replace(" ",",");
-//        newDesignColor = newDesignColor.replace(" ",",");
-//        newDesignColor = newDesignColor.replace(" ","");
-        
-//console.log(designColor);
 
-console.log(newDesignColor + "aa");        
-console.log(designColor + "bb");        
         if (designColor+'string' != newDesignColor+'string') {
-          console.log('not equal?');
-          designColor = e.responseText.split(" ");
-          $('.red-mood').css({opacity: designColor[0] });
-          $('.green-mood').css({opacity: designColor[1] });
-          $('.blue-mood').css({opacity: designColor[2] });                    
+         	 designColor = e.responseText.split(" ");
+         	 $('.red-mood').css({opacity: designColor[0] });
+          	 $('.green-mood').css({opacity: designColor[1] });
+         	 $('.blue-mood').css({opacity: designColor[2] });                    
 
-        $('#mess').html(designColor + "hello");
-
-  //        console.log(designColor);
-          //$('#overlay').css({backgroundColor: 'rgb(' + designColor + ')'});
         }
         
-        /*
-        if (designColor == 'red') {
-          $('#overlay').removeClass().addClass('red');            
-        }
-        if (designColor == 'blue') {
-          $('#overlay').removeClass().addClass('blue');            
-        }
-        if (designColor == 'yellow') {
-          $('#overlay').removeClass().addClass('yellow');            
-        }               */
         return e.responseText; 
       }
   });
@@ -108,8 +85,7 @@ console.log(designColor + "bb");
   25% {opacity:0;}
   50% {opacity:0;}
   75% {opacity:0;}
-  90% {opacity:1;}  
-  100% {opacity:0;}  
+  100% {opacity:1;}  
 }
 
 @-webkit-keyframes mood1{
@@ -123,7 +99,6 @@ console.log(designColor + "bb");
 
 
 .layer1{
-/*    background: -webkit-linear-gradient(bottom, rgb(43,70,94) 29%, rgb(194,41,41) 65%, rgb(155,171,38) 83%); */
   background: -webkit-linear-gradient(45deg, rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); 
     -webkit-animation: GoLayer1 15s infinite;
 }
@@ -156,9 +131,7 @@ console.log(designColor + "bb");
 
 }
 .layer7{
-  	/*background: -webkit-radial-gradient(80% 60%, ellipse cover, rgba(200,149,149,.2) 0%,rgba(113,13,13,.3) 46%,rgba(100,20,1,.5) 50%,rgba(30,10,10,.4) 53%,rgba(178,78,78,.2) 76%,rgba(56,56,56,1) 87%,rgba(27,27,27,1) 100%); /* Chrome10+,Safari5.1+ */
-    background: -webkit-radial-gradient(bottom right, ellipse cover, rgba(252,236,252,1) 0%,rgba(191,132,128,.5) 8%,rgba(249,137,137,1) 55%,rgba(252,156,141,.5) 100%,rgba(255,124,216,1) 100%);
-
+    background: -webkit-linear-gradient(45deg, rgba(248,80,50,1) 0%,rgba(241,111,92,1) 70%,rgba(240,47,23,1) 92%,rgba(231,56,39,1) 100%); /* Chrome10+,Safari5.1+ */
     -webkit-animation: GoLayer3 30s infinite;
 }
 .layer8 {
@@ -189,14 +162,10 @@ console.log(designColor + "bb");
   
 }
 
-/*
-.blue-mood {
-  -webkit-animation: mood1 30s infinite;
+
+.blue-mood,.red-mood,.green-mood {
+  -webkit-transition: opacity 500ms linear;
 }
-.red-mood {
-  -webkit-animation: mood2 30s infinite;
-}
-*/
 
 
 .layer,.bleedShield{
@@ -212,38 +181,56 @@ console.log(designColor + "bb");
 }
 
   #overlay { width: 100%; height: 100%; background: red; }
-
+  
+  #colortest { position: relative; display: none; }
+  #colortest div { width: 300px; height: 300px; position: absolute; }
+  #red { background: red; }
+  #green { background: green; }
+  #blue { background: blue; }
+  
   body { margin:0; padding:0; }
-  .blue-mood, .green-mood { display:none; }
+  .red-mood .screen { background:red; opacity: .3; }
+  .green-mood .screen { background:green; opacity: .3; }
+  .blue-mood .screen { background:blue; opacity: .3; } 
+  
+  .red-mood {
+  	-webkit-filter: grayscale(1);
+  }   
   
 </style>
 </head>
 <body>
-  <div id="mess"></div>
-  
   <div class="container">
       <div class="bleedShield">
+        <div class="tint">
+          <div class="layer tintlayer"></div>
+        </div>
+        
         <div class="red-mood">
           <div class="layer layer5"></div>
           <div class="layer layer6"></div>
           <div class="layer layer7"></div>
           <div class="layer layer8"></div>
+          <div class="layer screen"></div>
         </div>
- 
+<!--
         <div class="green-mood">
           <div class="layer layer9"></div>
           <div class="layer layer10"></div>
           <div class="layer layer11"></div>
           <div class="layer layer12"></div>
+          <div class="layer screen"></div>          
         </div>
         
+
         <div class="blue-mood">
           <div class="layer layer1"></div>
           <div class="layer layer2"></div>
           <div class="layer layer3"></div>
           <div class="layer layer4"></div>
+          <div class="layer screen"></div>          
         </div>
-
+-->
         
       </div>
   </div>

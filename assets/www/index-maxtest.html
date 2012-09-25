@@ -38,41 +38,18 @@ function checkColor() {
         console.log('Load was performed.');
 
       },
-      //color.php causes "error" because it's not valid Json, doesn't matter
-      error: function(e) { 
-        newDesignColor = e.responseText;
+      
+      error: function(e) {									//color.php causes "error" because it's not valid Json, doesn't matter 
         newDesignColor = e.responseText.split(" ");
-//        newDesignColor = newDesignColor.replace(" ",",");
-//        newDesignColor = newDesignColor.replace(" ",",");
-//        newDesignColor = newDesignColor.replace(" ","");
-        
-//console.log(designColor);
 
-console.log(newDesignColor + "aa");        
-console.log(designColor + "bb");        
         if (designColor+'string' != newDesignColor+'string') {
-          console.log('not equal?');
-          designColor = e.responseText.split(" ");
-          $('.red-mood').css({opacity: designColor[0] });
-          $('.green-mood').css({opacity: designColor[1] });
-          $('.blue-mood').css({opacity: designColor[2] });                    
+         	 designColor = e.responseText.split(" ");
+         	 $('.red-mood').css({opacity: designColor[0] });
+          	 $('.green-mood').css({opacity: designColor[1] });
+         	 $('.blue-mood').css({opacity: designColor[2] });                    
 
-        $('#mess').html(designColor + "hello");
-
-  //        console.log(designColor);
-          //$('#overlay').css({backgroundColor: 'rgb(' + designColor + ')'});
         }
         
-        /*
-        if (designColor == 'red') {
-          $('#overlay').removeClass().addClass('red');            
-        }
-        if (designColor == 'blue') {
-          $('#overlay').removeClass().addClass('blue');            
-        }
-        if (designColor == 'yellow') {
-          $('#overlay').removeClass().addClass('yellow');            
-        }               */
         return e.responseText; 
       }
   });
@@ -122,7 +99,6 @@ console.log(designColor + "bb");
 
 
 .layer1{
-/*    background: -webkit-linear-gradient(bottom, rgb(43,70,94) 29%, rgb(194,41,41) 65%, rgb(155,171,38) 83%); */
   background: -webkit-linear-gradient(45deg, rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); 
     -webkit-animation: GoLayer1 15s infinite;
 }
@@ -186,14 +162,10 @@ console.log(designColor + "bb");
   
 }
 
-/*
-.blue-mood {
-  -webkit-animation: mood1 30s infinite;
+
+.blue-mood,.red-mood,.green-mood {
+  -webkit-transition: opacity 500ms linear;
 }
-.red-mood {
-  -webkit-animation: mood2 30s infinite;
-}
-*/
 
 
 .layer,.bleedShield{
@@ -217,21 +189,13 @@ console.log(designColor + "bb");
   #blue { background: blue; }
   
   body { margin:0; padding:0; }
-  .red-mood .screen { background:red; opacity: .1; }
-  .green-mood .screen { background:green; opacity: .1; }
-  .blue-mood .screen { background:blue; opacity: .1; }    
+  .red-mood .screen { background:red; opacity: .3; }
+  .green-mood .screen { background:green; opacity: .3; }
+  .blue-mood .screen { background:blue; opacity: .3; }    
   
 </style>
 </head>
 <body>
-  <div id="colortest">
-      <div id="red"></div>    
-      <div id="green"></div>
-      <div id="blue"></div>
-      <div id="alpha"></div>
-  </div>
-  <div id="mess"></div>
-  
   <div class="container">
       <div class="bleedShield">
         <div class="red-mood">
