@@ -15,7 +15,13 @@ var newDesignColor = '';
 
 $(document).ready(function(){
   setInterval("checkColor()",500);
+  
+  
+  var top = Math.floor((Math.random()*100)+1);
+  var left = Math.floor((Math.random()*100)+1);
+  $('body').append('<style>.layer5c { background: -webkit-radial-gradient(' + top + '% ' + left + '%, ellipse cover, rgba(50,40,30,.4) 0%,rgba(125,126,125,1) 83%); -webkit-animation: GoLayer5 37s infinite; }</style>');
 });
+
 
 function checkColor() {
 
@@ -43,7 +49,7 @@ function checkColor() {
          	 
          	 rgbvalue = Math.floor(designColor[0]*255) + ',' + Math.floor(designColor[1]*255) + ',' + Math.floor(designColor[2]*255);
          	 console.log(rgbvalue + 'rgbbb');
-         	 $('.tintlayer').css({backgroundColor: 'rgb(' + rgbvalue + ')'});
+         	 $('.tintlayer').css({backgroundColor: 'rgb(0,20,255)'});
 
         }
         
@@ -194,6 +200,15 @@ background: -webkit-linear-gradient(45deg, rgba(167,91,89,0.5) 0%,rgba(163,181,1
     height:100%;
 }
 
+body {
+/*  -webkit-transition: -webkit-filter .5s linear; */
+}
+.inverted {
+  
+  -webkit-filter: invert(100%);
+}
+
+
   #overlay { width: 100%; height: 100%; background: red; }
   
   #colortest { position: relative; display: none; }
@@ -221,7 +236,7 @@ background: -webkit-linear-gradient(45deg, rgba(167,91,89,0.5) 0%,rgba(163,181,1
         </div>
         
         <div class="red-mood">
-          <div class="layer layer5"></div>
+          <div class="layer layer5c"></div>
           <div class="layer layer6"></div>
           <div class="layer layer7"></div>
           <div class="layer layer8"></div>

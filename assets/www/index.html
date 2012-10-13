@@ -1,52 +1,268 @@
 <!DOCTYPE HTML>
 <html>
 <head>
+  <title>Playlist</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="viewport" content="width=device-width, user-scalable=no" />
-<title>Cordova</title>
-<script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
-<script type="text/javascript" src="js/jquery.min.js"></script>
+  
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
+
+<script>
+
+var designColor = '';
+var newDesignColor = '';
 
 
-<style>
-body { margin: 0; padding: 0; text-align:center;}
-img { width: 350px; }
-iframe { width: 100%; height: 100%; }
+$(document).ready(function(){
+  setInterval("checkColor()",500);
+  
+  
+  var top = Math.floor((Math.random()*100)+1);
+  var left = Math.floor((Math.random()*100)+1);
+  $('body').append('<style>.layer5c { background: -webkit-radial-gradient(' + top + '% ' + left + '%, ellipse cover, rgba(50,40,30,.4) 0%,rgba(125,126,125,1) 83%); -webkit-animation: GoLayer5 37s infinite; }</style>');
+});
 
-.logo {
-	position: fixed;
-	top:0;
-	left:0;
-	width:100%;
-	height:100%;
-	-webkit-animation: logofade 34s infinite;
-	
+
+function checkColor() {
+
+  $.ajax({
+
+      url: 'http://192.168.20.211:8888/color.php',
+      type: 'GET',
+      //crossDomain: true,
+      dataType: 'json',
+      success: function(e) { 
+        //return "Success" + e; 
+        $('#mess').html(data);
+        console.log('Load was performed.');
+
+      },
+      
+      error: function(e) {									//color.php causes "error" because it's not valid Json, doesn't matter 
+        newDesignColor = e.responseText.split(" ");
+
+        if (designColor+'string' != newDesignColor+'string') {
+         	 designColor = e.responseText.split(" ");
+         	 //$('.red-mood').css({opacity: designColor[0] });
+           //$('.green-mood').css({opacity: designColor[1] });
+         	 //$('.blue-mood').css({opacity: designColor[2] });  
+         	 
+         	 rgbvalue = Math.floor(designColor[0]*255) + ',' + Math.floor(designColor[1]*255) + ',' + Math.floor(designColor[2]*255);
+         	 console.log(rgbvalue + 'rgbbb');
+         	 $('.tintlayer').css({backgroundColor: 'rgb(' + rgbvalue + ')'});
+
+        }
+        
+        return e.responseText; 
+      }
+  });
 }
 
-@-webkit-keyframes logofade{
+</script>
+<style>
+
+@-webkit-keyframes GoLayer1{
   0% {opacity:0;}
-  17% {opacity:0;}
-  28% {opacity:1;}
-  35% {opacity:1;}
-  48% {opacity:0;}
+  25% {opacity:1;}
+  50% {opacity:0;}
+  75% {opacity:0;}
+  100% {opacity:0;}  
+
+}
+@-webkit-keyframes GoLayer2{
+  0% {opacity:0;}
+  25% {opacity:0;}
+  50% {opacity:1;}
+  75% {opacity:0;}
+  100% {opacity:0;}  
+}
+@-webkit-keyframes GoLayer3{
+  0% {opacity:0;}
+  25% {opacity:0;}
+  50% {opacity:0;}
+  75% {opacity:1;}
+  100% {opacity:0;}  
+}
+@-webkit-keyframes GoLayer4{
+  0% {opacity:0;}
+  25% {opacity:0;}
+  50% {opacity:0;}
+  75% {opacity:0;}
+  100% {opacity:1;}  
+}
+@-webkit-keyframes GoLayer5{
+  0% {opacity:0;}
+  70% {opacity:1;}
+  100% {opacity:0;}  
+}
+@-webkit-keyframes GoLayer6{
+  0% {opacity:0;}
+  30% {opacity:1;}
   100% {opacity:0;}  
 }
 
-</style>
-<script>
-$(document).ready(function(){
-	$('.logo').click(function(){
-		$('.logo').hide();
-		setInterval("$('.logo').fadeIn('slow')",10000);
-	});
-});
-</script>
+@-webkit-keyframes mood1{
+  0% {opacity:0;}
+  100% {opacity:1;}
+}
+@-webkit-keyframes mood2{
+  0% {opacity:1;}
+  100% {opacity:0;}
+}
 
+
+.layer1{
+  background: -webkit-linear-gradient(45deg, rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); 
+    -webkit-animation: GoLayer1 15s infinite;
+}
+
+.layer2{
+    background: -webkit-linear-gradient(bottom, rgb(225,202,230) 29%, rgb(39,163,194) 65%, rgb(36,124,171) 83%);
+    -webkit-animation: GoLayer2 20s infinite;
+
+}
+.layer3{
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgb(196,222,242)), color-stop(0.5, rgb(242,242,242)), color-stop(1, rgb(240,240,240)));
+    -webkit-animation: GoLayer3 32s infinite;
+}
+.layer4 {
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(30,87,153,1) 0%,rgba(125,185,232,0) 100%); /* Chrome10+,Safari5.1+ */ 
+  -webkit-animation: GoLayer4 5s infinite;
+  
+  
+}
+
+.layer5{
+/*    background: -webkit-linear-gradient(bottom, rgb(43,70,94) 29%, rgb(194,41,41) 65%, rgb(155,171,38) 83%); */
+background: -webkit-radial-gradient(55% 45%, ellipse cover, rgba(50,40,30,.4) 0%,rgba(125,126,125,1) 83%);
+    -webkit-animation: GoLayer5 28s infinite;
+}
+
+.layer5b{
+/*    background: -webkit-linear-gradient(bottom, rgb(43,70,94) 29%, rgb(194,41,41) 65%, rgb(155,171,38) 83%); */
+background: -webkit-radial-gradient(20% 90%, ellipse cover, rgba(50,40,30,.4) 0%,rgba(125,126,125,1) 83%);
+    -webkit-animation: GoLayer5 37s infinite;
+}
+
+
+.layer6{
+background: -webkit-linear-gradient(45deg, rgba(245,243,245,1) 0%,rgba(163,157,157,0.58) 13%,rgba(173,165,165,0) 31%,rgba(199,187,187,0.81) 79%,rgba(198,186,189,0.91) 85%,rgba(197,183,193,0.91) 100%);
+    -webkit-animation: GoLayer2 20s infinite;
+
+}
+.layer7{
+background: -webkit-linear-gradient(45deg, rgba(171,134,127,.7) 0%,rgba(183,155,151,0) 70%,rgba(156,114,108,0.73) 92%,rgba(156,117,114,1) 100%);
+    -webkit-animation: GoLayer3 30s infinite;
+}
+.layer8 {
+background: -webkit-linear-gradient(45deg, rgba(167,91,89,0.5) 0%,rgba(163,181,195,0) 100%);
+  -webkit-animation: GoLayer4 33s infinite;
+  
+}
+
+
+.layer9 {
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(139,211,131,1) 0%,rgba(21,89,12,1) 100%); /* Chrome10+,Safari5.1+ */
+  -webkit-animation: GoLayer1 28s infinite;
+  
+}
+.layer10 {
+  background: -webkit-linear-gradient(-45deg, rgba(139,211,131,1) 0%,rgba(21,89,12,1) 100%); /* Chrome10+,Safari5.1+ */
+  -webkit-animation: GoLayer2 45s infinite;
+  
+}
+.layer11 {
+  background: -webkit-linear-gradient(-45deg, rgba(21,89,12,1) 0%,rgba(139,211,131,1) 100%); /* Chrome10+,Safari5.1+ */
+  -webkit-animation: GoLayer4 30s infinite;
+  
+}
+.layer12 {
+  background: -webkit-radial-gradient(center, ellipse cover, rgba(21,89,12,1) 0%,rgba(139,211,131,1) 100%); /* Chrome10+,Safari5.1+ */
+  -webkit-animation: GoLayer4 30s infinite;
+  
+}
+
+
+.blue-mood,.red-mood,.green-mood {
+  -webkit-transition: opacity 500ms linear;
+}
+
+
+.layer,.bleedShield,.tintlayer{
+    position:absolute;
+    width:100%;
+    height:100%;
+}
+.bleedShield{
+    position:static;
+    background:white;
+    width:100%;
+    height:100%;
+}
+
+body {
+/*  -webkit-transition: -webkit-filter .5s linear; */
+}
+.inverted {
+  
+  -webkit-filter: invert(100%);
+}
+
+
+  #overlay { width: 100%; height: 100%; background: red; }
+  
+  #colortest { position: relative; display: none; }
+  #colortest div { width: 300px; height: 300px; position: absolute; }
+  #red { background: red; }
+  #green { background: green; }
+  #blue { background: blue; }
+  
+  body { margin:0; padding:0; }
+  .red-mood .screen { background:red; opacity: .3; }
+  .green-mood .screen { background:green; opacity: .3; }
+  .blue-mood .screen { background:blue; opacity: .3; } 
+  
+  .tintlayer {
+    -webkit-transition: background-color 400ms linear;
+  }
+  
+</style>
 </head>
 <body>
+  <div class="container">
+      <div class="bleedShield">
+        <div class="tint">
+          <div class="tintlayer"></div>
+        </div>
+        
+        <div class="red-mood">
+          <div class="layer layer5c"></div>
+          <div class="layer layer6"></div>
+          <div class="layer layer7"></div>
+          <div class="layer layer8"></div>
+          <!--<div class="layer screen"></div>-->
+        </div>
+<!--
+        <div class="green-mood">
+          <div class="layer layer9"></div>
+          <div class="layer layer10"></div>
+          <div class="layer layer11"></div>
+          <div class="layer layer12"></div>
+          <div class="layer screen"></div>          
+        </div>
+        
 
-<img src="article-ton.png"/>
-<img class="logo" src="ground-logo2.png"/>
-
+        <div class="blue-mood">
+          <div class="layer layer1"></div>
+          <div class="layer layer2"></div>
+          <div class="layer layer3"></div>
+          <div class="layer layer4"></div>
+          <div class="layer screen"></div>          
+        </div>
+-->
+        
+      </div>
+  </div>
+  
 </body>
 </html>
