@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="viewport" content="width=device-width, user-scalable=no" />
+<title>Cordova</title>
+<script type="text/javascript" charset="utf-8" src="cordova-2.0.0.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+
+<style>
+body { margin: 0; padding: 0; background-color: #333333; text-align: center;}
+img { width: 100%; padding: 20px 0 0; }
+img.content { width: 98%; margin-left:-5px; }
+iframe { width: 100%; height: 100%; }
+
+.logo {
+	position: fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	-webkit-animation: logofade 31s infinite;
+	
+}
+
+@-webkit-keyframes logofade{
+  0% {opacity:0;}
+  17% {opacity:0;}
+  28% {opacity:1;}
+  35% {opacity:1;}
+  48% {opacity:0;}
+  100% {opacity:0;}  
+}
+
+</style>
+<script>
+$(document).ready(function(){
+	$('.logo').click(function(){
+		$('.logo').hide();
+		setInterval("$('.logo').fadeIn('slow')",10000);
+	});
+});
+</script>
+
+</head>
+<body>
+
+<img class="content" src="gallery-secondpage.png"/>
+<img class="logo" src="ground-logo2.png"/>
+
+</body>
+</html>
